@@ -5,7 +5,30 @@ Applied for issue: [#3170(Integrate Whisper.cpp as a new WASI-NN backend)](https
 ### About
 The pre-test required me to build Whisper.cpp and WasmEdge frameworks. I have detailed the overall build process below.
 
+### Table of Content
 
+[Section 0 - Setting up Build Environment](#section-0---setting-up-build-environment)
+
+- [Overview](#overview)
+- [Environment](#environment)
+- [Getting required tools/libs](#getting-the-required-tools--libs)
+
+[Section 1 - Whisper.cpp](#section-1---whispercpp)
+
+- [Overview](#overview-1)
+- [Building Steps](#building-steps)
+- [Running Whisper.cpp](#running-whispercpp-with-sample-audio)
+
+[Section 2 - WasmEdge](#section-2---wasmedge)
+
+- [Overview](#overview-2)
+- [Building Steps](#building-steps-1)
+- [Running API Server](#running-an-openai-compatible-api-server)
+- [Testing the API Server](#testing-the-api-server)
+- [Bonus - Running the frontend](#bonus---running-a-web-ui-for-the-api-server)
+
+
+---
 ## Section 0 - Setting up build environment
 
 ### Overview 
@@ -42,6 +65,7 @@ SIMDJson
 sudo apt install libsimdjson-dev libsimdjson9
 ```
 
+---
 ## Section 1 - Whisper.cpp
 
 ### Overview
@@ -80,6 +104,7 @@ We can now transcribe the audio file given in examples using the following comma
 
 We can see that it correctly transcribed the sample audio!
 
+---
 ## Section 2 - WasmEdge
 
 ### Overview
@@ -166,4 +191,4 @@ Start the API server
 wasmedge --dir .:. --nn-preload default:GGML:AUTO:Llama-2-7b-chat-hf-Q5_K_M.gguf llama-api-server.wasm -p llama-2-chat
 ```
 
-![Alt text](image.png)
+![Alt text](images/API_server.png)
