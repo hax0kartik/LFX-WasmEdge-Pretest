@@ -43,7 +43,7 @@ I'm running Pop!_OS which comes with `apt` package manager.
 
 #### Getting the required tools / libs
 
-> [!NOTE] This list only mentions libs which I did not had previously and needed to install.
+> [NOTE] This list only mentions libs which I did not had previously and needed to install.
 
 LLVM:
 
@@ -108,7 +108,9 @@ We can see that it correctly transcribed the sample audio!
 ## Section 2 - WasmEdge
 
 ### Overview
-Building process for WasmEdge was relatively simple as well. I followed the [instructions](https://wasmedge.org/docs/contribute/source/plugin/wasi_nn/#build-wasmedge-with-wasi-nn-llamacpp-backend) given in WasmEdge docs. *I should note that I built WasmEdge with WASI-NN llama.cpp backend and with OpenBLAS Support.* After building WasmEdge , we'll run the OpenAI compatible API Server from [this](https://github.com/second-state/LlamaEdge/tree/main/api-server) page.
+Building process for WasmEdge was relatively simple as well. I followed the [instructions](https://wasmedge.org/docs/contribute/source/plugin/wasi_nn/#build-wasmedge-with-wasi-nn-llamacpp-backend) given in WasmEdge docs. *I should note that I built WasmEdge with WASI-NN llama.cpp backend and with OpenBLAS Support.* 
+**I *did* face issues while building the project due to simdjson linking problems but I was able to over come that by installing libsimdjson from apt.**
+After building WasmEdge , we'll run the OpenAI compatible API Server from [this](https://github.com/second-state/LlamaEdge/tree/main/api-server) page.
 
 
 ### Building Steps
@@ -125,9 +127,7 @@ git checkout hydai/0.13.5_ggml_lts
 
 Now, we'll use cmake to build WasmEdge:
 ```bash
-CC="clang-18" CXX="clang++-18" cmake -GNinja -Bbuild -DCMAKE_BUILD_TYPE=Release -DWASMEDGE_PLUGIN_WASI_NN_BACKEND="GGML" -DWASMEDGE_PLUGIN_WASI_NN_GGML_LLAMA_BLAS=ON &&
-```
-```bash
+CC="clang-18" CXX="clang++-18" cmake -GNinja -Bbuild -DCMAKE_BUILD_TYPE=Release -DWASMEDGE_PLUGIN_WASI_NN_BACKEND="GGML" -DWASMEDGE_PLUGIN_WASI_NN_GGML_LLAMA_BLAS=ON
 cmake --build build --parallel 10
 ```
 ![WasmEdge build](images/wasmedge_build.png)
