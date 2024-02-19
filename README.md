@@ -27,6 +27,8 @@ The pre-test required me to build Whisper.cpp and WasmEdge frameworks. I have de
 - [Testing the API Server](#testing-the-api-server)
 - [Bonus - Running the frontend](#bonus---running-a-web-ui-for-the-api-server)
 
+*[Section 3 - Build and running a simple cpp example]()*
+
 
 ---
 ## Section 0 - Setting up build environment
@@ -192,3 +194,42 @@ wasmedge --dir .:. --nn-preload default:GGML:AUTO:Llama-2-7b-chat-hf-Q5_K_M.gguf
 ```
 
 ![Alt text](images/API_server.png)
+
+---
+## Section 3 - Building and running a cpp wasi-nn plugin example
+
+### Overview
+The `simple-cpp` folder in this repo contains bindings for `wasi-nn` in c++ and a minimal example which can be run with wasmedge. It has been roughly modeled after the wasi-nn rust bindings which can be found [here](https://github.com/second-state/wasmedge-wasi-nn). I built this example as I wanted to have a better understanding of how the plugin system worked. It should be noted that as of now only the **bare-minimum** stuff which was required to get the example working has been implemented.
+
+### Building Steps
+
+**It is assumed that the user has installed [emscripten](https://emscripten.org/docs/getting_started/downloads.html) already.**
+
+First we'll need to clone the git repo
+```bash
+git clone https://github.com/hax0kartik/LFX-WasmEdge-Pretest && cd LFX-WasmEdge-Pretest
+```
+
+Next open the `simple-cpp` directory
+```bash
+cd simple-cpp
+``` 
+
+Now we can build the example by
+```bash
+emcc src/*.cpp -o wasinn.wasm -s ERROR_ON_UNDEFINED_SYMBOLS=0 -std=c++23
+```
+
+### Running the example
+
+Firstly, download the model(Llama-2-7B). *This might take some time*
+```bash
+curl -LO https://huggingface.co/second-state/Llama-2-7B-Chat-GGUF/resolve/main/Llama-2-7b-chat-hf-Q5_K_M.gguf
+```
+
+Now run using wasmedge
+
+```bash
+wasmedge --dir .:. --nn-preload default:GGML:AUTO:openhermes-2.5-mistral-7b.Q2_K.gguf wasinn.wasm
+```
+![Output on running the example](images/example.png)
