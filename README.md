@@ -27,8 +27,11 @@ The pre-test required me to build Whisper.cpp and WasmEdge frameworks. I have de
 - [Testing the API Server](#testing-the-api-server)
 - [Bonus - Running the frontend](#bonus---running-a-web-ui-for-the-api-server)
 
-*[Section 3 - Build and running a simple cpp example]()*
+*[Section 3 - Building and running a simple cpp example](#section-3---building-and-running-a-cpp-wasi-nn-plugin-example)*
 
+- [Overview](#overview-3)
+- [Building Steps](#building-steps-2)
+- [Running the example](#running-the-example)
 
 ---
 ## Section 0 - Setting up build environment
@@ -199,7 +202,7 @@ wasmedge --dir .:. --nn-preload default:GGML:AUTO:Llama-2-7b-chat-hf-Q5_K_M.gguf
 ## Section 3 - Building and running a cpp wasi-nn plugin example
 
 ### Overview
-The `simple-cpp` folder in this repo contains bindings for `wasi-nn` in c++ and a minimal example which can be run with wasmedge. It has been roughly modeled after the wasi-nn rust bindings which can be found [here](https://github.com/second-state/wasmedge-wasi-nn). I built this example as I wanted to have a better understanding of how the plugin system worked. It should be noted that as of now only the **bare-minimum** stuff which was required to get the example working has been implemented.
+The `simple-cpp` folder in this repo contains bindings for `wasi-nn` in c++ and a minimal example which can be run with wasmedge. It has been modeled after the wasi-nn rust bindings which can be found [here](https://github.com/second-state/wasmedge-wasi-nn). I built this example with the intent of gaining a better understanding of how the plugin system works. It should be noted that as of now, only the **bare-minimum** stuff that was required to get the example working has been implemented.
 
 ### Building Steps
 
@@ -215,7 +218,7 @@ Next open the `simple-cpp` directory
 cd simple-cpp
 ``` 
 
-Now we can build the example by
+Now we can build the example by running
 ```bash
 emcc src/*.cpp -o wasinn.wasm -s ERROR_ON_UNDEFINED_SYMBOLS=0 -std=c++23
 ```
